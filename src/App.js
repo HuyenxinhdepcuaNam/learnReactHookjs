@@ -2,6 +2,7 @@ import logo from './logo.svg';
 import './App.css';
 import Nav from './views/Nav';
 import { useState } from 'react';
+import Todo from './views/Todo';
 
 const App = () => {
   let [name, setName] = useState('Banh Thi Huyen')
@@ -29,14 +30,9 @@ const App = () => {
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <h5>Hello world with {name}</h5>
-
-        {todos.map((item, index) => {
-          return (
-            <li key={index}>{item.id} - {item.title}</li>
-
-          )
-        })}
-
+        <Todo
+          todos={todos}
+        />
         <input type='text' value={address}
           onChange={(event) => handleOnChangeInput(event)} />
         <button type='button' onClick={() => handleEventClick()}>Click here</button>
