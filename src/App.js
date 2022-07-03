@@ -8,8 +8,8 @@ const App = () => {
   let [name, setName] = useState('Banh Thi Huyen')
   let [address, setAddress] = useState('')
   let [todos, setTodos] = useState([
-    { id: 'todo 1', title: 'hello banh thi huyen' },
-    { id: 'todo 2', title: 'hi banh thi huyen' },
+    { id: 'todo 1', title: 'hello banh thi huyen', type: 'eric' },
+    { id: 'todo 2', title: 'hi banh thi huyen', type: 'nam' },
 
   ])
 
@@ -26,12 +26,18 @@ const App = () => {
   }
   return (
     <div className="App">
-      <Nav />
       <header className="App-header">
+        <Nav />
         <img src={logo} className="App-logo" alt="logo" />
         <h5>Hello world with {name}</h5>
         <Todo
           todos={todos}
+          title={'All todos'}
+        />
+
+        <Todo
+          todos={todos.filter(item => item.type === 'eric')}
+          title={`Eric's todos`}
         />
         <input type='text' value={address}
           onChange={(event) => handleOnChangeInput(event)} />
