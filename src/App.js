@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import Nav from './views/Nav';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Todo from './views/Todo';
+import Covid from './views/Covid';
 
 const App = () => {
   let [name, setName] = useState('Banh Thi Huyen')
@@ -12,6 +13,9 @@ const App = () => {
     { id: 'todo 2', title: 'hi banh thi huyen', type: 'nam' },
 
   ])
+
+  useEffect(() => {
+  }, [])
 
   const handleEventClick = () => {
     if (!address) {
@@ -36,7 +40,7 @@ const App = () => {
         <Nav />
         <img src={logo} className="App-logo" alt="logo" />
         <h5>Hello world with {name}</h5>
-        <Todo
+        {/* <Todo
           todos={todos}
           title={'All todos'}
           handleDeleteTodo={handleDeleteTodo}
@@ -50,7 +54,10 @@ const App = () => {
         />
         <input type='text' value={address}
           onChange={(event) => handleOnChangeInput(event)} />
-        <button type='button' onClick={() => handleEventClick()}>Click here</button>
+        <button type='button' onClick={() => handleEventClick()}>Click here</button> */}
+
+        <Covid />
+
       </header>
     </div>
   );
