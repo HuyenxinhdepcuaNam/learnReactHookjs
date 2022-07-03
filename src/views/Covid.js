@@ -1,41 +1,10 @@
 import { useState, useEffect } from "react"
-import axios from "axios"
-import moment from "moment"
+import useFetch from "../customize/fetch"
 
 const Covid = () => {
-    let [dataCovid, setDataCovid] = useState([])
-    let [loading, setLoading] = useState(true)
-    let [errMessage, setErrMessage] = useState('')
-    const fetchData = async () => {
-        try {
-            let res = await axios.get(`https://api.covid19api.com/country/vietnam?from=2021-03-01T00:00:00Z&to=2021-04-01T00:00:00Z`)
-            let data = res && res.data ? res.data : []
-            if (data && data.length > 0) {
-                data.map(item => {
-                    item.Date = moment(item.Date).format('DD/MM/YYYY')
-                    return item
-
-                })
-                data = data.reverse()
-            }
-            setDataCovid(data)
-            setLoading(false)
-        } catch (e) {
-            setErrMessage(e.message)
-        }
-
-    }
-    useEffect(() => {
-        // let res = await axios.get(`https://api.covid19api.com/country/vietnam?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z`)
-        // let data = res && res.data ? res.data : []
-        // setDataCovid(data)
 
 
-        setTimeout(() => {
-            fetchData()
-        }, 3000)
-
-    }, [])
+    const { data: dataCovid, loading, errMessage } = useFetch(`https://api.covid19api.com/country/vietnam?from=2021-03-01T00:00:00Z&to=2021-04-01T00:00:00Z`)
 
     return (
         <table>
@@ -61,8 +30,7 @@ const Covid = () => {
                                 <td>{item.Recovered}</td>
                             </tr>
                         )
-                    }
-                    )
+                    })
                     : <td colSpan={'5'} style={{ textAlign: 'center' }}>
                         {errMessage === '' ? 'Loading...' : errMessage}
                     </td>
