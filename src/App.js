@@ -6,11 +6,21 @@ import { useState } from 'react';
 const App = () => {
   let [name, setName] = useState('Banh Thi Huyen')
   let [address, setAddress] = useState('')
+  let [todos, setTodos] = useState([
+    { id: 'todo 1', title: 'hello banh thi huyen' },
+    { id: 'todo 2', title: 'hi banh thi huyen' },
+
+  ])
+
   const handleEventClick = () => {
-    setName(address)
+    if (!address) {
+      return alert('Missing input!')
+    }
+    let newTodo = { id: Math.floor(Math.random() * 10), title: address }
+    setTodos([...todos, newTodo])
+    setAddress('')
   }
   const handleOnChangeInput = (event) => {
-    console.log('check', event.target.value)
     setAddress(event.target.value)
   }
   return (
@@ -18,7 +28,15 @@ const App = () => {
       <Nav />
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <h4>Hello world with {name}</h4>
+        <h5>Hello world with {name}</h5>
+
+        {todos.map((item, index) => {
+          return (
+            <li key={index}>{item.id} - {item.title}</li>
+
+          )
+        })}
+
         <input type='text' value={address}
           onChange={(event) => handleOnChangeInput(event)} />
         <button type='button' onClick={() => handleEventClick()}>Click here</button>
