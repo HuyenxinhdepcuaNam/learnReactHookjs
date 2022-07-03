@@ -4,6 +4,7 @@ import moment from "moment"
 
 const Covid = () => {
     let [dataCovid, setDataCovid] = useState([])
+    let [loading, setLoading] = useState(true)
     const fetchData = async () => {
         let curretnDate = new Date()
         console.log(curretnDate)
@@ -15,15 +16,19 @@ const Covid = () => {
                 return item
 
             })
+            data = data.reverse()
         }
         setDataCovid(data)
+        setLoading(false)
     }
     useEffect(() => {
         // let res = await axios.get(`https://api.covid19api.com/country/vietnam?from=2020-03-01T00:00:00Z&to=2020-04-01T00:00:00Z`)
         // let data = res && res.data ? res.data : []
         // setDataCovid(data)
 
-        fetchData()
+        setTimeout(() => {
+            fetchData()
+        }, 3000)
     }, [])
 
     return (
@@ -39,17 +44,21 @@ const Covid = () => {
                 </tr>
             </thead>
             <tbody>
-                {dataCovid && dataCovid.map((item, index) => {
-                    return (
-                        <tr key={index}>
-                            <td>{item.Date}</td>
-                            <td>{item.Confirmed}</td>
-                            <td>{item.Active}</td>
-                            <td>{item.Deaths}</td>
-                            <td>{item.Recovered}</td>
-                        </tr>
+                {loading === false && dataCovid
+                    ? dataCovid.map((item, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{item.Date}</td>
+                                <td>{item.Confirmed}</td>
+                                <td>{item.Active}</td>
+                                <td>{item.Deaths}</td>
+                                <td>{item.Recovered}</td>
+                            </tr>
+                        )
+                    }
                     )
-                })}
+                    : <td colSpan={'5'} style={{ textAlign: 'center' }}>Loading...</td>
+                }
             </tbody>
         </table>
     )
