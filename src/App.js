@@ -7,6 +7,13 @@ import Covid from './views/Covid';
 import CountDown from './views/Countdown';
 import CountdownHook from './views/CountdownHook';
 
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+
 const App = () => {
   let [name, setName] = useState('Banh Thi Huyen')
   let [address, setAddress] = useState('')
@@ -41,34 +48,42 @@ const App = () => {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <Nav />
-        <img src={logo} className="App-logo" alt="logo" />
-        <h5>Hello world with {name}</h5>
-        <CountDown onTimeup={onTimeup} />
-        <span>-------------------------------</span>
-        <CountdownHook onTimeup={onTimeup} />
-        {/* <Todo
-          todos={todos}
-          title={'All todos'}
-          handleDeleteTodo={handleDeleteTodo}
-        />
+    <BrowserRouter>
+      <div className="App">
+        <header className="App-header">
+          <Nav />
+          <img src={logo} className="App-logo" alt="logo" />
+          <Switch>
+            <Route path="/" exact>
+              <Covid />
+            </Route>
+            <Route path="/timer">
+              <h5>Hello world with {name}</h5>
+              <CountDown onTimeup={onTimeup} />
+              <span>-------------------------------</span>
+              <CountdownHook onTimeup={onTimeup} />
+            </Route>
+            <Route path='/todo'>
+              <Todo
+                todos={todos}
+                title={'All todos'}
+                handleDeleteTodo={handleDeleteTodo}
+              />
 
-        <Todo
-          todos={todos.filter(item => item.type === 'eric')}
-          title={`Eric's todos`}
-          handleDeleteTodo={handleDeleteTodo}
+              {/* <Todo
+                todos={todos.filter(item => item.type === 'eric')}
+                title={`Eric's todos`}
+                handleDeleteTodo={handleDeleteTodo}
 
-        />
-        <input type='text' value={address}
-          onChange={(event) => handleOnChangeInput(event)} />
-        <button type='button' onClick={() => handleEventClick()}>Click here</button> */}
-
-        {/* <Covid /> */}
-
-      </header>
-    </div>
+              /> */}
+              <input type='text' value={address}
+                onChange={(event) => handleOnChangeInput(event)} />
+              <button type='button' onClick={() => handleEventClick()}>Click here</button>
+            </Route>
+          </Switch>
+        </header>
+      </div>
+    </BrowserRouter>
   );
 }
 
