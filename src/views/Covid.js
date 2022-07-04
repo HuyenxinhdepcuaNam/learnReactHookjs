@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react"
 import useFetch from "../customize/fetch"
-
+import moment from "moment"
 const Covid = () => {
 
-
-    const { data: dataCovid, loading, errMessage } = useFetch(`https://api.covid19api.com/country/vietnam?from=2021-03-01T00:00:00Z&to=2021-04-01T00:00:00Z`)
+    const today = new Date(new Date().setHours(0, 0, 0, 0))
+    const priorDay = moment().subtract(30, 'days')
+    const { data: dataCovid, loading, errMessage } = useFetch(`https://api.covid19api.com/country/vietnam?from=${priorDay.toISOString()}&to=${today.toISOString()}`)
 
     return (
         <table>
-            {console.log('check dataCovid', dataCovid)}
             <thead>
                 <tr>
                     <th>Date</th>
@@ -31,9 +31,11 @@ const Covid = () => {
                             </tr>
                         )
                     })
-                    : <td colSpan={'5'} style={{ textAlign: 'center' }}>
-                        {errMessage === '' ? 'Loading...' : errMessage}
-                    </td>
+                    : <tr>
+                        <td colSpan={'5'} style={{ textAlign: 'center' }}>
+                            {errMessage === '' ? 'Loading...' : errMessage}
+                        </td>
+                    </tr>
                 }
             </tbody>
         </table>

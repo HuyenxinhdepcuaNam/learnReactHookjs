@@ -4,6 +4,8 @@ import Nav from './views/Nav';
 import { useState, useEffect } from 'react';
 import Todo from './views/Todo';
 import Covid from './views/Covid';
+import CountDown from './views/Countdown';
+import CountdownHook from './views/CountdownHook';
 
 const App = () => {
   let [name, setName] = useState('Banh Thi Huyen')
@@ -34,12 +36,19 @@ const App = () => {
     currentTodos = todos.filter(item => item.id !== id)
     setTodos(currentTodos)
   }
+  const onTimeup = () => {
+    // alert('Time out!')
+  }
+
   return (
     <div className="App">
       <header className="App-header">
         <Nav />
         <img src={logo} className="App-logo" alt="logo" />
         <h5>Hello world with {name}</h5>
+        <CountDown onTimeup={onTimeup} />
+        <span>-------------------------------</span>
+        <CountdownHook onTimeup={onTimeup} />
         {/* <Todo
           todos={todos}
           title={'All todos'}
@@ -56,7 +65,7 @@ const App = () => {
           onChange={(event) => handleOnChangeInput(event)} />
         <button type='button' onClick={() => handleEventClick()}>Click here</button> */}
 
-        <Covid />
+        {/* <Covid /> */}
 
       </header>
     </div>
